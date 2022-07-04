@@ -15,7 +15,7 @@ player.on(
   }, 1000)
 );
 //перевірка чи пустий сторедж, якщо не пустий то плеєру вказуємо початковий час
-if (localStorage.getItem(STORAGE_TIME) !== '') {
-  const savedData = localStorage.getItem(STORAGE_TIME);
+const savedData = localStorage.getItem(STORAGE_TIME);
+if (savedData) {
   player.setCurrentTime(savedData);
 }
