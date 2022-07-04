@@ -18,6 +18,7 @@ onGetDataToInputs();
 // та очищаємо localStorage
 function onFormSubmit(event) {
   event.preventDefault();
+
   event.target.reset();
   localStorage.removeItem(STORAGE__KEY);
   console.log(formData);
@@ -29,6 +30,7 @@ function onFormSubmit(event) {
 // записуємо в localStorage цю строку
 function onInputText(e) {
   formData[e.target.name] = e.target.value;
+
   const savedData = JSON.stringify(formData);
   localStorage.setItem(STORAGE__KEY, savedData);
 }
