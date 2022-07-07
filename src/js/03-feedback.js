@@ -6,6 +6,7 @@ const refs = {
   form: document.querySelector('form'),
   input: document.querySelector('input'),
   textarea: document.querySelector('textarea'),
+  button: document.querySelector('button'),
 };
 
 //додаємо слухачів на всю форму та окремо на input
@@ -22,6 +23,9 @@ function onFormSubmit(event) {
   event.preventDefault();
   event.target.reset();
   localStorage.removeItem(STORAGE__KEY);
+  // if (formData.email === '' || formData.message === '') {
+  //   button.setAttribute(disabled);
+  // }
 }
 
 // додавши слухача на всю форму, якщо об'єкт formData пустий записуємо в пустий об'єкт
@@ -29,10 +33,6 @@ function onFormSubmit(event) {
 // перетворюємо об'єкт на строку
 // записуємо в localStorage цю строку
 function onInputText(e) {
-  // console.log(localStorage);
-
-  // console.log(localStorage.getItem(STORAGE__KEY));
-
   formData = localStorage.getItem(STORAGE__KEY) ? parsedData : {};
   formData[e.target.name] = e.target.value;
   const savedData = JSON.stringify(formData);
