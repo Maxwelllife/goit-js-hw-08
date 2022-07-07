@@ -1,6 +1,5 @@
 import throttle from 'lodash.throttle';
 const STORAGE__KEY = 'feedback-form-state';
-let formData = {};
 let parsedData = {};
 const refs = {
   form: document.querySelector('form'),
@@ -21,11 +20,11 @@ onGetDataToInputs();
 // та очищаємо localStorage
 function onFormSubmit(event) {
   event.preventDefault();
-  event.target.reset();
-  localStorage.removeItem(STORAGE__KEY);
-  // if (formData.email === '' || formData.message === '') {
-  //   button.setAttribute(disabled);
-  // }
+
+  if (parsedData.email && parsedData.message) {
+    event.target.reset();
+    localStorage.removeItem(STORAGE__KEY);
+  } else alert('заповніть будь-ласка всі поля');
 }
 
 // додавши слухача на всю форму, якщо об'єкт formData пустий записуємо в пустий об'єкт
@@ -33,11 +32,9 @@ function onFormSubmit(event) {
 // перетворюємо об'єкт на строку
 // записуємо в localStorage цю строку
 function onInputText(e) {
-  formData = localStorage.getItem(STORAGE__KEY) ? parsedData : {};
-  formData[e.target.name] = e.target.value;
-  const savedData = JSON.stringify(formData);
-  localStorage.setItem(STORAGE__KEY, savedData);
-  console.log(formData);
+  parsedData[e.target.name] = e.target.value;
+  localStorage.setItem(STORAGE__KEY, JSON.stringify(parsedData));
+  console.log(parsedData);
 }
 
 // отримуємо STORAGE__KEY (значення) із сховища, якщо там щось було оновлюємо DOM
@@ -46,5 +43,10 @@ function onGetDataToInputs() {
   if (parsedData) {
     refs.input.value = parsedData.email ? parsedData.email : '';
     refs.textarea.value = parsedData.message ? parsedData.message : '';
+  } else {
+    parsedData = {};
   }
 }
+// Object.entries(parsedData).forEach(([name, value]) => {
+//   form.elements[name].value = value;
+// });
